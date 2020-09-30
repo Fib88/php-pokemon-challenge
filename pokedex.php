@@ -11,13 +11,16 @@ $pokemon = $_POST['name'];
 if($pokemon === null){
     $pokemon = 1;
 }
-
 $pokemonData = file_get_contents("https://pokeapi.co/api/v2/pokemon/" .$pokemon);
 $poke = (json_decode($pokemonData,true));
-var_dump($poke);
+
+$image = $poke['sprites']['front_default'];
+$moves = $poke['moves']['0']['move']['name'];
+
 
 
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -38,6 +41,10 @@ var_dump($poke);
 </form>
 
 <div class="pokeName"><?php echo $poke['name'];?></div>
+<div class="pokeId"><?php echo $poke['id'];?></div>
+<img src="<?php echo $image;?>">
+<div class="pokeMoves"><?php echo $moves;?></div>
+
 
 </body>
 </html>
