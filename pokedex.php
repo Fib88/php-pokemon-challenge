@@ -19,6 +19,18 @@ $moves = $poke['moves']['0']['move']['name'];
 
 
 
+function getRandomMoves($poke){
+    $max = count($poke['moves']);
+    for ($i = 1; $i <=4; $i++) {
+        $randomNumber = rand(0 ,$max);
+        $randomMove = $poke['moves'][$randomNumber]['move']['name'];
+        return $randomMove;
+    }
+}
+
+
+
+
 ?>
 
 
@@ -43,7 +55,7 @@ $moves = $poke['moves']['0']['move']['name'];
 <div class="pokeName"><?php echo $poke['name'];?></div>
 <div class="pokeId"><?php echo $poke['id'];?></div>
 <img src="<?php echo $image;?>">
-<div class="pokeMoves"><?php echo $moves;?></div>
+<div class="pokeMoves"><?php echo getRandomMoves($poke)." ".getRandomMoves($poke)." ".getRandomMoves($poke)." ".getRandomMoves($poke);?></div>
 
 
 </body>
