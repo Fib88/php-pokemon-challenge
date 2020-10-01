@@ -12,6 +12,6 @@ I'm trying to get my evolutions to work right now.
 Got my evolutions on the page.
 What I want to do next:
     
-    * error handling for when pokemon only have 1 move
-    * show evo images instead of the names
+* error handling for when pokemon only have 1 move
+* show evo images instead of the names
     
