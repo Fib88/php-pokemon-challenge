@@ -25,21 +25,25 @@ $pokemonSpeciesData = file_get_contents($pokemonEvoUrl);
       //var_dump($pokemonEvoUrl);
 $pokemonEvoData = file_get_contents($pokemonEvo);
     $evolutions = (json_decode($pokemonEvoData, true));
-    $evolutionsName = $evolutions['chain']['evolves_to'][0]['evolves_to'][0];
+    $evolutionsName = $evolutions['chain'];
 //    var_dump($evolutionsName);
 
-function getPokeEvo($evolutions,$evolutionsName){
+function getPokeEvo($evolutionsName){
     $evoList = [];
     do{
-     if(array_key_exists($evolutionsName['species']['name'],$evolutionsName)){
-         array_push($evoList, $evolutionsName['species']['name']);
+        array_push($evoList, $evolutionsName['species']['name']);
+     if($evolutionsName['evolves_to']){
+         $evolutionsName = $evolutionsName['evolves_to'][0];
      }
-     var_dump($evoList);
-
+     else{
+      $evolutionsName = null;
+        }
     }
-    while(count($evoList)<3);
-    return getPokeEvo($evoList);
+    while(!!$evolutionsName);
+    var_dump($evoList);
+    return $evoList;
 }
+getPokeEvo($evolutionsName);
 
 
 
