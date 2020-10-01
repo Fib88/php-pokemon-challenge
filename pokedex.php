@@ -39,14 +39,9 @@ function getPokeEvo($evolutionsName){
       $evolutionsName = null;
         }
     }
-    while(!!$evolutionsName);
-    var_dump($evoList);
+    while(!!$evolutionsName);//!! is similar to bolean and returns true or false depending on condition
     return $evoList;
 }
-getPokeEvo($evolutionsName);
-
-
-
 
 function getRandomMoves($poke){
     $max = count($poke['moves']);
@@ -105,6 +100,9 @@ function getTypes($types){
 <p><?php echo getRandomMoves($poke);?></p>
 <p><?php echo getRandomMoves($poke);?></p>
 <p><?php echo getRandomMoves($poke);?></p>
+
+<h4>Evolution Tree:</h4>
+<p><?php echo implode(getPokeEvo($evolutionsName));?></p>
 
 
 </body>
