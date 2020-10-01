@@ -14,4 +14,6 @@ What I want to do next:
     
 * error handling for when pokemon only have 1 move
 * show evo images instead of the names
+
+
     

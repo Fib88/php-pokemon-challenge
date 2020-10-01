@@ -8,9 +8,14 @@ error_reporting(E_ALL);
 
 $pokemon = $_POST['name'];
 
+if(empty($pokemon)=== true){
+
+}
+
 if($pokemon === null){
     $pokemon = 1;
 }
+
 $pokemonData = file_get_contents("https://pokeapi.co/api/v2/pokemon/" .$pokemon);
 $poke = (json_decode($pokemonData,true));
     $image = $poke['sprites']['front_default'];
@@ -22,11 +27,11 @@ $pokemonSpeciesData = file_get_contents($pokemonEvoUrl);
     $species = (json_decode($pokemonSpeciesData,true));
     $pokemonEvo = $species['evolution_chain']['url'];
 
-      //var_dump($pokemonEvoUrl);
+
 $pokemonEvoData = file_get_contents($pokemonEvo);
     $evolutions = (json_decode($pokemonEvoData, true));
     $evolutionsName = $evolutions['chain'];
-//    var_dump($evolutionsName);
+
 
 function getPokeEvo($evolutionsName){
     $evoList = [];
@@ -45,7 +50,7 @@ function getPokeEvo($evolutionsName){
 
 function getRandomMoves($poke){
     $max = count($poke['moves']);
-    for ($i = 0; $i <=4; $i++) {
+    for ($i = 0; $i <=3; $i++) {
         $randomNumber = rand(0 ,$max);
         $randomMove = $poke['moves'][$randomNumber]['move']['name'];
         return $randomMove;
@@ -82,28 +87,27 @@ function getTypes($types){
 <body>
 <form action="pokedex.php" method="post">
 
-    <label for="name"> name or id </label><br>
-    <input type="text" id="name" name="name" value=""><br>
-    <input type="submit" value="Submit">
+    <label for="name"><h3>Pokédex</h3>  </label><br>
+    <input type="text" id="name" name="name" placeholder ="pokemon name or id number" value=""><br>
+    <input type="submit" value="Search">
 
 </form>
 
-<div class="pokeName"><?php echo $poke['name'];?></div>
-<div class="pokeId"><?php echo $poke['id'];?></div>
+<div class="pokeName"><h4><?php echo $poke['name']."°".$poke['id'];?></h4></div>
+
 <img src="<?php echo $image;?>">
 
-<h4>Types:</h4>
+<div>
+<h4>Type(s):</h4>
 <p><?php echo getTypes($types);?></p>
 
 <h4>Moves:</h4>
-<p><?php echo getRandomMoves($poke);?></p>
-<p><?php echo getRandomMoves($poke);?></p>
-<p><?php echo getRandomMoves($poke);?></p>
-<p><?php echo getRandomMoves($poke);?></p>
+<p><?php echo getRandomMoves($poke)."/".getRandomMoves($poke)."/".getRandomMoves($poke)."/".getRandomMoves($poke);?></p>
+
 
 <h4>Evolution Tree:</h4>
 <p><?php echo implode(getPokeEvo($evolutionsName));?></p>
-
+</div>
 
 </body>
 </html>
