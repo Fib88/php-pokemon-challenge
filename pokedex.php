@@ -12,22 +12,32 @@ if($pokemon === null){
     $pokemon = 1;
 }
 $pokemonData = file_get_contents("https://pokeapi.co/api/v2/pokemon/" .$pokemon);
-$pokemonSpeciesData = file_get_contents("https://pokeapi.co/api/v2/pokemon-species/" .$pokemon);
-
 $poke = (json_decode($pokemonData,true));
-$species = (json_decode($pokemonSpeciesData,true));
+    $image = $poke['sprites']['front_default'];
+    $moves = $poke['moves']['0']['move']['name'];
+    $types = $poke['types'];
+    $pokemonEvoUrl = $poke['species']['url'];
+
+$pokemonSpeciesData = file_get_contents($pokemonEvoUrl);
+    $species = (json_decode($pokemonSpeciesData,true));
+    $pokemonEvo = $species['evolution_chain']['url'];
+//    var_dump($pokemonEvo);
+      var_dump($pokemonEvoUrl);
+$pokemonEvoData = file_get_contents($pokemonEvo);
+    $evolutions = (json_decode($pokemonEvoData, true));
+    $evolutionsName = $evolutions['chain']['evolves_to'][0]['evolves_to'][0];
+    var_dump($evolutionsName);
+
+function getPokeEvo($evolutions,$evolutionsName){
+    $evoList = [];
+    do{
+     array_push($evoList, $evolutionsName);
 
 
+    }
+    while(count($evoList)<3);
+}
 
-$pokemonEvoUrl = $poke['species']['url'];
-//var_dump($pokemonEvoUrl);
-$image = $poke['sprites']['front_default'];
-$moves = $poke['moves']['0']['move']['name'];
-$types = $poke['types'];
-$pokemonPreviousEvo = $species['evolves_from_species']['name'];
-//$pokemonNextEvo = $species['evolution_chain'];
-var_dump($pokemonPreviousEvo);
-//var_dump($pokemonNextEvo);
 
 
 
@@ -51,7 +61,6 @@ function getTypes($types){
     else{
       return($types[0]['type']['name']);
     }
-
 }
 
 
