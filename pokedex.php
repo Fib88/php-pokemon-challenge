@@ -21,21 +21,24 @@ $poke = (json_decode($pokemonData,true));
 $pokemonSpeciesData = file_get_contents($pokemonEvoUrl);
     $species = (json_decode($pokemonSpeciesData,true));
     $pokemonEvo = $species['evolution_chain']['url'];
-//    var_dump($pokemonEvo);
-      var_dump($pokemonEvoUrl);
+
+      //var_dump($pokemonEvoUrl);
 $pokemonEvoData = file_get_contents($pokemonEvo);
     $evolutions = (json_decode($pokemonEvoData, true));
     $evolutionsName = $evolutions['chain']['evolves_to'][0]['evolves_to'][0];
-    var_dump($evolutionsName);
+//    var_dump($evolutionsName);
 
 function getPokeEvo($evolutions,$evolutionsName){
     $evoList = [];
     do{
-     array_push($evoList, $evolutionsName);
-
+     if(array_key_exists($evolutionsName['species']['name'],$evolutionsName)){
+         array_push($evoList, $evolutionsName['species']['name']);
+     }
+     var_dump($evoList);
 
     }
     while(count($evoList)<3);
+    return getPokeEvo($evoList);
 }
 
 
@@ -98,6 +101,7 @@ function getTypes($types){
 <p><?php echo getRandomMoves($poke);?></p>
 <p><?php echo getRandomMoves($poke);?></p>
 <p><?php echo getRandomMoves($poke);?></p>
+
 
 </body>
 </html>
