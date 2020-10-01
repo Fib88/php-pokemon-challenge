@@ -20,13 +20,14 @@ $species = (json_decode($pokemonSpeciesData,true));
 
 
 $pokemonEvoUrl = $poke['species']['url'];
-var_dump($pokemonEvoUrl);
+//var_dump($pokemonEvoUrl);
 $image = $poke['sprites']['front_default'];
 $moves = $poke['moves']['0']['move']['name'];
+$types = $poke['types'];
 $pokemonPreviousEvo = $species['evolves_from_species']['name'];
-$pokemonNextEvo = $species['evolution_chain'];
+//$pokemonNextEvo = $species['evolution_chain'];
 var_dump($pokemonPreviousEvo);
-var_dump($pokemonNextEvo);
+//var_dump($pokemonNextEvo);
 
 
 
@@ -39,6 +40,19 @@ function getRandomMoves($poke){
     }
 }
 
+function getTypes($types){
+    $typesList = [];
+    if(count($types)>1){
+        for($i = 0;$i<count($types);$i++){
+            array_push($typesList,$types[$i]['type']['name']);
+        }
+        return ($typesList[0]."/".$typesList[1]);
+    }
+    else{
+      return($types[0]['type']['name']);
+    }
+
+}
 
 
 
@@ -66,6 +80,10 @@ function getRandomMoves($poke){
 <div class="pokeName"><?php echo $poke['name'];?></div>
 <div class="pokeId"><?php echo $poke['id'];?></div>
 <img src="<?php echo $image;?>">
+
+<h4>Types:</h4>
+<p><?php echo getTypes($types);?></p>
+
 <h4>Moves:</h4>
 <p><?php echo getRandomMoves($poke);?></p>
 <p><?php echo getRandomMoves($poke);?></p>
